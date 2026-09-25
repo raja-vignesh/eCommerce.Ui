@@ -18,7 +18,7 @@ export const AppLayout = () => {
           </main>
         </div>
       </div>
-      {!isLoggedIn && <Login />}
+      {!isLoggedIn && <Login setLoggedIn={setIsLoggedIn} />}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type SetStateAction } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 import { loginRequest } from "../services/requests/LoginRequest";
 
@@ -6,7 +6,11 @@ import { loginRequest } from "../services/requests/LoginRequest";
  * Login component renders a centered authentication modal for users to sign in
  * with their email and password before accessing the application.
  */
-export const Login = () => {
+
+type LoginProps = {
+  setLoggedIn: React.Dispatch<SetStateAction<boolean>>;
+};
+export const Login = ({ setLoggedIn }: LoginProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const controller = new AbortController();
@@ -24,6 +28,7 @@ export const Login = () => {
         signal: controller.signal,
       });
       console.log(response);
+      setLoggedIn(true);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         console.log("Login request cancelled");
