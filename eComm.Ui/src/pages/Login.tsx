@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 
+/**
+ * Login component renders a centered authentication modal for users to sign in
+ * with their email and password before accessing the application.
+ */
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
