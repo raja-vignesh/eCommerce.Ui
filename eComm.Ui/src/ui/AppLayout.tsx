@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import { Header } from "./Header";
 import { SideBar } from "./SideBar";
 import { useState } from "react";
-import Login from "../pages/Login";
+import { Login } from "../pages/Login";
 
 export const AppLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,7 +18,7 @@ export const AppLayout = () => {
           </main>
         </div>
       </div>
-      {!isLoggedIn && <Login onLoginSuccess={() => setIsLoggedIn(true)} />}
+      {!isLoggedIn && <Login />}
     </>
   );
 };

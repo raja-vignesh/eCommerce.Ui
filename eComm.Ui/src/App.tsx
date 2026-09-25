@@ -1,10 +1,9 @@
-import path from "path";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { AppLayout } from "./ui/AppLayout";
 import { Dashboard } from "./pages/Dashboard";
-import { Login } from "./pages/Login";
 import { Orders } from "./pages/Orders";
 import { Cart } from "./pages/Cart";
+import { Login } from "./pages/Login";
 
 const browserRouter = createBrowserRouter([
   {

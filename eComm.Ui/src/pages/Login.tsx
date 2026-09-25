@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 
-type LoginProps = {
-  onLoginSuccess: () => void;
-};
-
-function Login({ onLoginSuccess }: LoginProps) {
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,15 +12,12 @@ function Login({ onLoginSuccess }: LoginProps) {
     console.log(email, password);
 
     // Call this ONLY when API login succeeds
-    onLoginSuccess();
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-md">
       <div className="w-full max-w-md rounded-2xl border border-white/30 bg-white/80 p-8 shadow-2xl backdrop-blur-xl">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-slate-800">Welcome Back</h1>
-
           <p className="mt-2 text-sm text-slate-500">Sign in to your account</p>
         </div>
 
@@ -87,6 +80,4 @@ function Login({ onLoginSuccess }: LoginProps) {
       </div>
     </div>
   );
-}
-
-export default Login;
+};
