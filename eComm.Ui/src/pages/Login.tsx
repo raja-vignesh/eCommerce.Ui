@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
+import { loginRequest } from "../services/requests/LoginRequest";
 
 /**
  * Login component renders a centered authentication modal for users to sign in
@@ -8,14 +9,28 @@ import { CiLock, CiMail } from "react-icons/ci";
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const controller = new AbortController();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     // Later call your .NET login API here
     console.log(email, password);
 
     // Call this ONLY when API login succeeds
+    try {
+      const response = await loginRequest({
+        request: { email, password },
+        signal: controller.signal,
+      });
+      console.log(response);
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        console.log("Login request cancelled");
+        return;
+      }
+      console.error("Login failed:", error);
+    }
   };
 
   return (
