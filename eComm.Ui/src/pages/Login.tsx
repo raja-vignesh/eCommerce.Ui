@@ -68,7 +68,7 @@ export const Login = ({ setLoggedIn }: LoginProps) => {
           <p className="mt-2 text-sm text-slate-500">Sign in to your account</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
           {/* Email */}
           <div>
             <label
@@ -88,7 +88,6 @@ export const Login = ({ setLoggedIn }: LoginProps) => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                formNoValidate
                 className="w-full bg-transparent py-3 text-sm outline-none"
               />
             </div>
