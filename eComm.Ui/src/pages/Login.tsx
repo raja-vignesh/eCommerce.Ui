@@ -2,6 +2,8 @@ import { useState, type SetStateAction } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 import { loginRequest } from "../services/requests/LoginRequest";
 import { ApiError } from "../sharedTypes/ApiError";
+import { LoginRequestSchema } from "../sharedTypes/schemas/LoginRequestSchema";
+import z from "zod";
 
 /**
  * Login component renders a centered authentication modal for users to sign in
@@ -22,6 +24,17 @@ export const Login = ({ setLoggedIn }: LoginProps) => {
 
     // Later call your .NET login API here
     console.log(email, password);
+
+    const parsedInput = LoginRequestSchema.safeParse({ email, password });
+    if (!parsedInput.success) {
+      const { fieldErrors } = z.flattenError(parsedInput.error);
+      setErrorDetail(
+        fieldErrors.email?.[0] ??
+          fieldErrors.password?.[0] ??
+          "Please check your details.",
+      );
+      return;
+    }
 
     // Call this ONLY when API login succeeds
     try {
