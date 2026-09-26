@@ -88,6 +88,7 @@ export const Login = ({ setLoggedIn }: LoginProps) => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
+                formNoValidate
                 className="w-full bg-transparent py-3 text-sm outline-none"
               />
             </div>
