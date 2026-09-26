@@ -1,6 +1,7 @@
 import { useState, type SetStateAction } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 import { loginRequest } from "../services/requests/LoginRequest";
+import { ApiError } from "../sharedTypes/ApiError";
 
 /**
  * Login component renders a centered authentication modal for users to sign in
@@ -13,6 +14,7 @@ type LoginProps = {
 export const Login = ({ setLoggedIn }: LoginProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorDetail, setErrorDetail] = useState("");
   const controller = new AbortController();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -28,10 +30,18 @@ export const Login = ({ setLoggedIn }: LoginProps) => {
         signal: controller.signal,
       });
       console.log(response);
+      setErrorDetail("");
       setLoggedIn(true);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         console.log("Login request cancelled");
+        return;
+      }
+      if (error instanceof ApiError) {
+        console.error("Status:", error.status);
+        console.error("Title:", error.title);
+        console.error("Detail:", error.detail);
+        setErrorDetail(error.detail);
         return;
       }
       console.error("Login failed:", error);
@@ -100,6 +110,9 @@ export const Login = ({ setLoggedIn }: LoginProps) => {
           >
             Login
           </button>
+          {errorDetail && (
+            <h6 className="text-center text-red-700">{errorDetail}</h6>
+          )}
         </form>
       </div>
     </div>

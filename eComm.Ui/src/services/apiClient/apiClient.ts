@@ -1,4 +1,5 @@
 import { string, unknown } from "zod";
+import { ApiError } from "../../sharedTypes/ApiError";
 
 const request = async <T>(
   url: string,
@@ -6,7 +7,15 @@ const request = async <T>(
 ): Promise<T | undefined> => {
   const response = await fetch(url, options);
   if (!response.ok) {
-    throw new Error(`Http status ${response.status}`);
+    const errorBody = await response.json();
+    throw new ApiError(
+      response.status,
+      errorBody.title ?? "Request failed",
+      errorBody.detail,
+      errorBody.errors,
+    );
+
+    //throw new Error(`Http status ${response.status}`);
   }
   // post and patch
   if (
