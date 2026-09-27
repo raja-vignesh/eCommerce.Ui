@@ -95,4 +95,35 @@ describe("Login", () => {
     expect(loginRequest).toHaveBeenCalledOnce();
     expect(setIsLoggedIn).not.toHaveBeenCalled();
   });
+
+  it("shows email not found when the API returns 404", async () => {
+    // Arrange
+    const user = userEvent.setup();
+    const setIsLoggedIn = vi.fn();
+
+    vi.mocked(loginRequest).mockRejectedValue(
+      new ApiError(404, "Not Found", "Email not found", {}),
+    );
+
+    render(<Login setLoggedIn={setIsLoggedIn} />);
+
+    // Act
+    await user.type(
+      screen.getByRole("textbox", { name: /email/i }),
+      "missing@example.com",
+    );
+    await user.type(screen.getByLabelText(/password/i), "password123");
+    await user.click(screen.getByRole("button", { name: /login/i }));
+
+    // Assert
+    expect(await screen.findByText("Email not found")).toBeTruthy();
+    expect(loginRequest).toHaveBeenCalledWith({
+      request: {
+        email: "missing@example.com",
+        password: "password123",
+      },
+      signal: expect.any(AbortSignal),
+    });
+    expect(setIsLoggedIn).not.toHaveBeenCalled();
+  });
 });
