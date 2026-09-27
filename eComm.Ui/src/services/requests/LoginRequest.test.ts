@@ -42,4 +42,25 @@ describe("loginRequest", () => {
     expect(body.get("email")).toBe("raja@example.com");
     expect(body.get("password")).toBe("password123");
   });
+
+  it("rejects an invalid API response", async () => {
+    // Arrange: userId must be a UUID, so this response is invalid
+    vi.mocked(apiClient.multiPartPost).mockResolvedValue({
+      userId: "not-a-uuid",
+      email: "raja@example.com",
+      personName: "Raja",
+      token: "test-token",
+      success: true,
+    });
+
+    // Act and Assert
+    await expect(
+      loginRequest({
+        request: {
+          email: "raja@example.com",
+          password: "password123",
+        },
+      }),
+    ).rejects.toThrow();
+  });
 });
