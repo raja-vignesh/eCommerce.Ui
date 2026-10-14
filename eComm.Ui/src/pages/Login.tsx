@@ -1,8 +1,8 @@
 import { useState, type SetStateAction } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
-import { loginRequest } from "../services/requests/LoginRequest";
+import { loginRequest } from "../services/requests/login/LoginRequest";
 import { ApiError } from "../sharedTypes/ApiError";
-import { LoginRequestSchema } from "../sharedTypes/schemas/LoginRequestSchema";
+import { LoginRequestSchema } from "../sharedTypes/schemas/Login/LoginRequestSchema";
 import z from "zod";
 
 /**

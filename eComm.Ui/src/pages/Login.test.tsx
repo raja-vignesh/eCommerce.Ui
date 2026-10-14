@@ -2,7 +2,7 @@
 import { afterEach, expect, vi, describe, it } from "vitest";
 import { cleanup, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { loginRequest } from "../services/requests/LoginRequest";
+import { loginRequest } from "../services/requests/login/LoginRequest";
 import { Login } from "./Login";
 import { ApiError } from "../sharedTypes/ApiError";
 // mock the login request

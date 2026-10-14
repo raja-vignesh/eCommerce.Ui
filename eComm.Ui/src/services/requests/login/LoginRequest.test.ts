@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { apiClient } from "../apiClient/apiClient";
-import { loginRequest } from "./LoginRequest";
+import { apiClient } from "../../apiClient/apiClient";
+import { loginRequest } from "../LoginRequest";
 
 vi.mock("../apiClient/apiClient", () => ({
   apiClient: {

@@ -1,7 +1,7 @@
-import { LoginResponseSchema } from "../../sharedTypes/schemas/LoginResponseSchema";
-import type { LoginRequestType } from "../../sharedTypes/types/LoginRequest.type";
-import type { LoginResponseType } from "../../sharedTypes/types/LoginResponse.type";
-import { apiClient } from "../apiClient/apiClient";
+import { LoginResponseSchema } from "../../../sharedTypes/schemas/Login/LoginResponseSchema";
+import type { LoginRequestType } from "../../../sharedTypes/types/LoginRequest.type";
+import type { LoginResponseType } from "../../../sharedTypes/types/LoginResponse.type";
+import { apiClient } from "../../apiClient/apiClient";
 
 const apiBaseUrl = import.meta.env.VITE_USER_API_BASE_URL;
 
