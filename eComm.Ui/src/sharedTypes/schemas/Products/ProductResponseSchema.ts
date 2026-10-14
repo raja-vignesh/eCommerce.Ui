@@ -8,3 +8,5 @@ export const ProductResponseSchema = z.object({
   unitPrice: z.number(),
   quantityInStock: z.number(),
 });
+
+export const ProductsResponseSchema = z.array(ProductResponseSchema);

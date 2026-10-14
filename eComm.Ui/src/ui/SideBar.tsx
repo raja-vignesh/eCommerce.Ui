@@ -26,6 +26,12 @@ export const SideBar = () => {
               Orders
             </NavLink>
           </li>
+          <li>
+            <NavLink to="products" className="flex items-center gap-3">
+              <FaSitemap />
+              Products
+            </NavLink>
+          </li>
         </ul>
       </div>
     </aside>
