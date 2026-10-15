@@ -1,0 +1,4 @@
+export const QUERY_STALE_TIME = {
+  TEN_SECONDS: 10 * 1000,
+  ONE_MINUTE: 60 * 1000,
+};

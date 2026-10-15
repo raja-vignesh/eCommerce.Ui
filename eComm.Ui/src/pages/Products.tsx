@@ -1,42 +1,24 @@
-import { useEffect, useState } from "react";
-import type { ProductsResponse } from "../sharedTypes/types/products/ProductsResponse.type";
-import { getProductsRequest } from "../services/requests/products/ProductRequest";
-import { ApiError } from "../sharedTypes/ApiError";
+import { useProducts } from "../hooks/products/useProducts";
 
 const Products = () => {
-  const [products, setProducts] = useState<ProductsResponse>();
-  const [errorDetail, setErrorDetail] = useState<string>();
-  useEffect(() => {
-    const controller = new AbortController();
-    const fetchProducts = async () => {
-      try {
-        const response = await getProductsRequest({
-          pageNumber: 1,
-          pageSize: 10,
-          signal: controller.signal,
-        });
-        setProducts(response);
-      } catch (error) {
-        if (error instanceof DOMException && error.name === "AbortError") {
-          console.log("Products request cancelled");
-          return;
-        }
-        if (error instanceof ApiError) {
-          console.error("Status:", error.status);
-          console.error("Title:", error.title);
-          console.error("Detail:", error.detail);
-          setErrorDetail(error.detail);
-          return;
-        }
-      }
-    };
-    fetchProducts();
+  const { data, isPending, isError, error, isFetching } = useProducts(1, 10);
+  if (isPending) {
+    return <p>Loading Products...</p>;
+  }
+  if (isError) {
+    return <p>{error.message}</p>;
+  }
 
-    return () => {
-      controller.abort();
-    };
-  }, []);
-  return <div>Products</div>;
+  return (
+    <div>
+      {isFetching && <p>Refreshing Products...</p>}
+      <ul>
+        {data.items.map((p) => (
+          <li key={p.productId}>{p.productName}</li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
 export default Products;
