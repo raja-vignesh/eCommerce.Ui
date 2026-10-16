@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "./Header";
 import { SideBar } from "./SideBar";
-import { useState } from "react";
 import { Login } from "../pages/Login";
+import { useUserContext } from "../contexts/UserContext";
 
 export const AppLayout = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user } = useUserContext();
 
   return (
     <>
@@ -18,7 +18,7 @@ export const AppLayout = () => {
           </main>
         </div>
       </div>
-      {!isLoggedIn && <Login setLoggedIn={setIsLoggedIn} />}
+      {!user && <Login />}
     </>
   );
 };

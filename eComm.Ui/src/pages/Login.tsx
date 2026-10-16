@@ -4,19 +4,21 @@ import { loginRequest } from "../services/requests/login/LoginRequest";
 import { ApiError } from "../sharedTypes/ApiError";
 import { LoginRequestSchema } from "../sharedTypes/schemas/Login/LoginRequestSchema";
 import z from "zod";
+import { useUserContext } from "../contexts/UserContext";
 
 /**
  * Login component renders a centered authentication modal for users to sign in
  * with their email and password before accessing the application.
  */
 
-type LoginProps = {
-  setLoggedIn: React.Dispatch<SetStateAction<boolean>>;
-};
-export const Login = ({ setLoggedIn }: LoginProps) => {
+// type LoginProps = {
+//   setUser: React.Dispatch<SetStateAction<string>>;
+// };
+export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorDetail, setErrorDetail] = useState("");
+  const { setUser } = useUserContext();
   const controller = new AbortController();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,8 +45,9 @@ export const Login = ({ setLoggedIn }: LoginProps) => {
         signal: controller.signal,
       });
       console.log(response);
+      localStorage.setItem("user", JSON.stringify(response));
+      setUser(JSON.stringify(response));
       setErrorDetail("");
-      setLoggedIn(true);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         console.log("Login request cancelled");

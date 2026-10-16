@@ -20,7 +20,7 @@ describe("Login", () => {
     // Arrange
     const user = userEvent.setup();
     const setIsLoggdIn = vi.fn();
-    render(<Login setLoggedIn={setIsLoggdIn} />);
+    render(<Login />);
     // Act
     await user.type(
       screen.getByRole("textbox", { name: /email/i }),
@@ -105,7 +105,7 @@ describe("Login", () => {
       new ApiError(404, "Not Found", "Email not found", {}),
     );
 
-    render(<Login setLoggedIn={setIsLoggedIn} />);
+    render(<Login />);
 
     // Act
     await user.type(

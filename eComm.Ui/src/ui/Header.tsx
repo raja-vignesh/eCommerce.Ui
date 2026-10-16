@@ -1,7 +1,9 @@
 import { CiSearch } from "react-icons/ci";
 import { CiLogin } from "react-icons/ci";
+import { useUserContext } from "../contexts/UserContext";
 
 export const Header = () => {
+  const { clearStorage } = useUserContext();
   return (
     <header className="bg-amber-500 flex items-center px-5 gap-3">
       <button className="sm:hidden">==</button>
@@ -20,7 +22,10 @@ export const Header = () => {
           />
         </div>
       </form>
-      <button className="flex items-center gap-2">
+      <button
+        className="flex items-center gap-2"
+        onClick={() => clearStorage()}
+      >
         <CiLogin />
         Logout
       </button>

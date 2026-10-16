@@ -1,9 +1,5 @@
 import { PagedResponseSchema } from "../../../sharedTypes/schemas/pagedResult/PagedResponseSchema";
-import { ProductsResponseSchema } from "../../../sharedTypes/schemas/Products/ProductResponseSchema";
-import type {
-  PagedResponse,
-  ProductsResponse,
-} from "../../../sharedTypes/types/products/ProductsResponse.type";
+import type { PagedResponse } from "../../../sharedTypes/types/products/ProductsResponse.type";
 import { apiClient } from "../../apiClient/apiClient";
 
 const apiBaseUrl = import.meta.env.VITE_PRODUCTS_API_BASE_URL;
