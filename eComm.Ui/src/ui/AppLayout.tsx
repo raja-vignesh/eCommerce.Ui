@@ -9,15 +9,18 @@ export const AppLayout = () => {
 
   return (
     <>
-      <div className="grid grid-flow-col sm:grid-cols-[220px_minmax(0,1fr)] min-h-screen">
+      <div className="grid h-dvh grid-cols-1 overflow-hidden sm:grid-cols-[220px_minmax(0,1fr)]">
         <SideBar />
-        <div className="grid grid-rows-[60px_1fr]">
+
+        <div className="grid min-h-0 min-w-0 grid-rows-[60px_minmax(0,1fr)]">
           <Header />
-          <main className="min-w-0">
+
+          <main className="min-h-0 min-w-0 overflow-y-auto p-6">
             <Outlet />
           </main>
         </div>
       </div>
+
       {!user && <Login />}
     </>
   );

@@ -5,7 +5,7 @@ import { FaSitemap } from "react-icons/fa";
 
 export const SideBar = () => {
   return (
-    <aside className="bg-sky-500 hidden sm:block px-3 py-5">
+    <aside className="bg-sky-500 hidden sm:block px-3 py-5 h-full min-h-0 overflow-hidden">
       <div className="flex flex-col gap-10">
         <h1 className="flex items-center text-2xl font-semibold justify-around">
           <span>

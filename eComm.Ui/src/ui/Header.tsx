@@ -5,7 +5,7 @@ import { useUserContext } from "../contexts/UserContext";
 export const Header = () => {
   const { clearStorage } = useUserContext();
   return (
-    <header className="bg-amber-500 flex items-center px-5 gap-3">
+    <header className="bg-amber-500 flex items-center px-5 gap-3 sticky top-0">
       <button className="sm:hidden">==</button>
       <form className=" max-w-xs ml-auto" role="search">
         <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-md bg-white outline-1 -outline-offset-1 outline-slate-300 dark:outline-neutral-700 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-blue-600">

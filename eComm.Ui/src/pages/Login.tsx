@@ -1,4 +1,4 @@
-import { useState, type SetStateAction } from "react";
+import { useState } from "react";
 import { CiLock, CiMail } from "react-icons/ci";
 import { loginRequest } from "../services/requests/login/LoginRequest";
 import { ApiError } from "../sharedTypes/ApiError";

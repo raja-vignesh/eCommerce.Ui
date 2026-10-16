@@ -1,6 +1,7 @@
 import toast from "react-hot-toast";
 import { useProducts } from "../hooks/products/useProducts";
 import { useEffect } from "react";
+import ProductCard from "../ui/products/ProductCard";
 const PRODUCTS_TOAST_ID = "products-fetching";
 
 const Products = () => {
@@ -23,9 +24,12 @@ const Products = () => {
   return (
     <div>
       {data?.items.length === 0 && <p>No Products Found</p>}
-      <ul>
+      <ul className="grid sm:grid-cols-2 md:grid-cols-3 xs:grid-cols-1 m-5">
         {data?.items.map((p) => (
-          <li key={p.productId}>{p.productName}</li>
+          <li className="my-2">
+            {" "}
+            <ProductCard key={p.productId} product={p} />
+          </li>
         ))}
       </ul>
     </div>
