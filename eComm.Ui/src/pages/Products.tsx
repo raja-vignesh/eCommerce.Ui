@@ -1,11 +1,17 @@
 import toast from "react-hot-toast";
 import { useProducts } from "../hooks/products/useProducts";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../ui/products/ProductCard";
+import { Pagination } from "../ui/Pagination";
 const PRODUCTS_TOAST_ID = "products-fetching";
+const PAGE_SIZE = 10;
 
 const Products = () => {
-  const { data, isPending, isError, error, isFetching } = useProducts(1, 10);
+  const [pageNumber, setPageNumber] = useState(1);
+  const { data, isPending, isError, error, isFetching } = useProducts(
+    pageNumber,
+    PAGE_SIZE,
+  );
 
   useEffect(() => {
     if (isPending && isFetching)
@@ -24,6 +30,13 @@ const Products = () => {
   return (
     <div>
       {data?.items.length === 0 && <p>No Products Found</p>}
+      {data && data.totalPages > 1 && (
+        <Pagination
+          currentPage={pageNumber}
+          totalPages={data.totalPages}
+          onPageChange={setPageNumber}
+        />
+      )}
       <ul className="grid sm:grid-cols-2 md:grid-cols-3 xs:grid-cols-1 m-5">
         {data?.items.map((p) => (
           <li className="my-2">

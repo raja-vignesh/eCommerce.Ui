@@ -31,3 +31,36 @@ export const getProductsRequest = async ({
   }
   return parsed.data;
 };
+
+export const searchProductsRequest = async ({
+  searchTerm,
+  pageNumber,
+  pageSize,
+  signal,
+}: {
+  searchTerm: string;
+  pageNumber: number;
+  pageSize: number;
+  signal?: AbortSignal;
+}): Promise<PagedResponse> => {
+  const searchParams = new URLSearchParams({
+    searchTerm,
+    pageNumber: String(pageNumber),
+    pageSize: String(pageSize),
+  });
+
+  const response = await apiClient.get<PagedResponse>(
+    `${apiBaseUrl}/api/products/search?${searchParams}`,
+    signal,
+  );
+  if (!response) {
+    throw new Error("Search API returned no data");
+  }
+  const parsed = await PagedResponseSchema.safeParseAsync(response);
+  if (!parsed.success) {
+    console.error("products parsing failed", parsed.error.issues);
+    console.error("zod error", parsed.error.message);
+    throw new Error(parsed.error.message);
+  }
+  return parsed.data;
+};
