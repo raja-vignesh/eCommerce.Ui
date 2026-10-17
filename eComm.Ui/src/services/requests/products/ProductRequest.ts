@@ -43,6 +43,7 @@ export const searchProductsRequest = async ({
   pageSize: number;
   signal?: AbortSignal;
 }): Promise<PagedResponse> => {
+  console.log("searchproducts");
   const searchParams = new URLSearchParams({
     searchTerm,
     pageNumber: String(pageNumber),

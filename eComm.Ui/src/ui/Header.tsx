@@ -6,12 +6,13 @@ import { useState, type FormEvent } from "react";
 
 export const Header = () => {
   const { clearStorage } = useUserContext();
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
   const [search, setSearch] = useState(searchParams.get("search") ?? "");
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
+    console.log("handle search");
     e.preventDefault();
 
     const term = search.trim();
@@ -38,6 +39,13 @@ export const Header = () => {
           </label>
           <input
             type="search"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              if (e.target.value.trim() === "") {
+                navigate("/products?page=1");
+              }
+            }}
             id="search"
             placeholder="Search..."
             required

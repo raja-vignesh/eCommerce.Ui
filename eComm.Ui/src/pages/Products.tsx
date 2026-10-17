@@ -1,16 +1,25 @@
 import toast from "react-hot-toast";
 import { useProducts } from "../hooks/products/useProducts";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ProductCard from "../ui/products/ProductCard";
 import { Pagination } from "../ui/Pagination";
+import { useSearchParams } from "react-router-dom";
 const PRODUCTS_TOAST_ID = "products-fetching";
 const PAGE_SIZE = 10;
 
 const Products = () => {
-  const [pageNumber, setPageNumber] = useState(1);
+  //const [pageNumber, setPageNumber] = useState(1);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchTerm = searchParams.get("search") ?? "";
+  const rawPage = Number(searchParams.get("pageNumber") ?? "1");
+  const pageNumber = Number.isSafeInteger(rawPage) && rawPage > 0 ? rawPage : 1;
+
+  console.log(`search term ${searchTerm}`);
   const { data, isPending, isError, error, isFetching } = useProducts(
     pageNumber,
     PAGE_SIZE,
+    searchTerm,
   );
 
   useEffect(() => {
@@ -27,6 +36,14 @@ const Products = () => {
     return <p>Failed to load products</p>;
   }
 
+  const handlePageChange = (page: number) => {
+    setSearchParams((params) => {
+      const next = new URLSearchParams(params);
+      next.set("pageNumber", String(page));
+      return next;
+    });
+  };
+
   return (
     <div>
       {data?.items.length === 0 && <p>No Products Found</p>}
@@ -34,12 +51,12 @@ const Products = () => {
         <Pagination
           currentPage={pageNumber}
           totalPages={data.totalPages}
-          onPageChange={setPageNumber}
+          onPageChange={handlePageChange}
         />
       )}
       <ul className="grid sm:grid-cols-2 md:grid-cols-3 xs:grid-cols-1 m-5">
         {data?.items.map((p) => (
-          <li className="my-2">
+          <li className="my-2" key={p.productId}>
             {" "}
             <ProductCard key={p.productId} product={p} />
           </li>
