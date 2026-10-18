@@ -5,8 +5,15 @@ import toast from "react-hot-toast";
 import { useDeleteProduct } from "../hooks/products/useDeleteProduct";
 const PRODUCTS_TOAST_ID = "products-fetching";
 const PAGE_SIZE = 10;
+import { useState } from "react";
+import type { ProductResponse } from "../sharedTypes/types/products/ProductsResponse.type";
+import { EditProductModal } from "../ui/products/EditProductModal";
 
 const Products = () => {
+  // Inside ManageProducts:
+  const [editingProduct, setEditingProduct] = useState<ProductResponse | null>(
+    null,
+  );
   const { data, isPending, isError, isFetching, error } = useProducts(
     1,
     PAGE_SIZE,
@@ -43,11 +50,16 @@ const Products = () => {
         products={data?.items ?? []}
         onEdit={(product) => {
           console.log("Edit:", product.productId);
+          setEditingProduct(product);
         }}
         onDelete={(product) => {
           console.log("Delete:", product.productId);
           handleDelete(product.productId);
         }}
+      />
+      <EditProductModal
+        product={editingProduct}
+        onClose={() => setEditingProduct(null)}
       />
     </div>
   );

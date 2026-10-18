@@ -1,6 +1,6 @@
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import Table, { type TableColumn } from "../Table";
-import type { ProductResponse } from "../../sharedTypes/schemas/Products/ProductResponseSchema";
+import type { ProductResponse } from "../../sharedTypes/types/products/ProductsResponse.type";
 
 type ProductsTableProps = {
   products: ProductResponse[];

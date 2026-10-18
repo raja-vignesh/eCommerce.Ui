@@ -1,5 +1,10 @@
 import { PagedResponseSchema } from "../../../sharedTypes/schemas/pagedResult/PagedResponseSchema";
-import type { PagedResponse } from "../../../sharedTypes/types/products/ProductsResponse.type";
+import type { ProductFormValues } from "../../../sharedTypes/schemas/Products/ProductFormSchema";
+import { ProductResponseSchema } from "../../../sharedTypes/schemas/Products/ProductResponseSchema";
+import type {
+  PagedResponse,
+  ProductResponse,
+} from "../../../sharedTypes/types/products/ProductsResponse.type";
 import { apiClient } from "../../apiClient/apiClient";
 
 const apiBaseUrl = import.meta.env.VITE_PRODUCTS_API_BASE_URL;
@@ -71,4 +76,26 @@ export const deleteProductRequest = async (
   signal?: AbortSignal,
 ) => {
   await apiClient.delete(`${apiBaseUrl}/api/products/${productId}`, signal);
+};
+
+export const updateProductRequest = async (
+  productId: string,
+  product: ProductFormValues,
+  signal?: AbortSignal,
+) => {
+  const response = await apiClient.put<ProductResponse>(
+    `${apiBaseUrl}/api/products/${productId}`,
+    product,
+    signal,
+  );
+  if (!response) {
+    throw new Error("Error updating product");
+  }
+  const parsed = await ProductResponseSchema.safeParseAsync(response);
+  if (!parsed.success) {
+    console.error("products parsing failed", parsed.error.issues);
+    console.error("zod error", parsed.error.message);
+    throw new Error(parsed.error.message);
+  }
+  return parsed.data;
 };

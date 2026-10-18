@@ -5,6 +5,7 @@ const request = async <T>(
   options?: RequestInit,
 ): Promise<T | undefined> => {
   const response = await fetch(url, options);
+  console.log(`options ${options?.body} ${options?.headers}`);
   if (!response.ok) {
     const errorBody = await response.json();
     throw new ApiError(
@@ -34,21 +35,21 @@ export const apiClient = {
       method: "POST",
       body: JSON.stringify(body),
       signal,
-      headers: { Content_Type: "application/json" },
+      headers: { "Content-Type": "application/json" },
     }),
   patch: <T>(url: string, body: unknown, signal?: AbortSignal) =>
     request<T>(url, {
       method: "PATCH",
       body: JSON.stringify(body),
       signal,
-      headers: { Content_Type: "application/json" },
+      headers: { "Content-Type": "application/json" },
     }),
   put: <T>(url: string, body: unknown, signal?: AbortSignal) =>
     request<T>(url, {
       method: "PUT",
       body: JSON.stringify(body),
       signal,
-      headers: { Content_Type: "application/json" },
+      headers: { "Content-Type": "application/json" },
     }),
   delete: <T>(url: string, signal?: AbortSignal) =>
     request<T>(url, {

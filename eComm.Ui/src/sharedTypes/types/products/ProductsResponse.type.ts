@@ -6,5 +6,6 @@ import type {
 import type { PagedResponseSchema } from "../../schemas/pagedResult/PagedResponseSchema";
 
 export type ProductsResponse = z.infer<typeof ProductsResponseSchema>;
+export type ProductResponse = z.infer<typeof ProductResponseSchema>;
 export type PagedResponse = z.infer<typeof PagedResponseSchema>;
 export type ProductType = z.infer<typeof ProductResponseSchema>;
