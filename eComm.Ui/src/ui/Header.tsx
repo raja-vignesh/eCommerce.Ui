@@ -25,7 +25,7 @@ export const Header = () => {
 
     params.set("page", "1");
 
-    navigate(`/products?${params.toString()}`);
+    navigate(`/home?${params.toString()}`);
   };
 
   return (
@@ -43,7 +43,7 @@ export const Header = () => {
             onChange={(e) => {
               setSearch(e.target.value);
               if (e.target.value.trim() === "") {
-                navigate("/products?page=1");
+                navigate("/home?page=1");
               }
             }}
             id="search"

@@ -65,3 +65,10 @@ export const searchProductsRequest = async ({
   }
   return parsed.data;
 };
+
+export const deleteProductRequest = async (
+  productId: string,
+  signal?: AbortSignal,
+) => {
+  await apiClient.delete(`${apiBaseUrl}/api/products/${productId}`, signal);
+};

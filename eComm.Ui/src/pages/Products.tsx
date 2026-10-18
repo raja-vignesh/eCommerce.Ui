@@ -2,6 +2,7 @@ import { ProductsTable } from "../ui/products/ProductsTable";
 import { useProducts } from "../hooks/products/useProducts";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useDeleteProduct } from "../hooks/products/useDeleteProduct";
 const PRODUCTS_TOAST_ID = "products-fetching";
 const PAGE_SIZE = 10;
 
@@ -10,6 +11,15 @@ const Products = () => {
     1,
     PAGE_SIZE,
   );
+  const deleteMutation = useDeleteProduct();
+
+  const handleDelete = (productId: string) => {
+    deleteMutation.mutate(productId, {
+      onSuccess: () =>
+        toast.success(`Product ${productId} deleted successfully`),
+      onError: () => toast.error(`Failed to delete product ${productId}`),
+    });
+  };
 
   useEffect(() => {
     if (isPending && isFetching)
@@ -36,6 +46,7 @@ const Products = () => {
         }}
         onDelete={(product) => {
           console.log("Delete:", product.productId);
+          handleDelete(product.productId);
         }}
       />
     </div>
