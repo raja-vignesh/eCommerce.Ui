@@ -8,6 +8,7 @@ import { Toaster } from "react-hot-toast";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { QUERY_STALE_TIME } from "./constants/queryContants";
 import { UserProvider } from "./contexts/UserContext";
+import Home from "./pages/Home";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -27,11 +28,11 @@ const browserRouter = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Products />,
+        element: <Home />,
       },
       {
-        path: "dashboard",
-        element: <Products />,
+        path: "home",
+        element: <Home />,
       },
       {
         path: "login",

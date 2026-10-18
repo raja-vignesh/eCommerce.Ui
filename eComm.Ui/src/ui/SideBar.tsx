@@ -15,6 +15,12 @@ export const SideBar = () => {
         </h1>
         <ul className="space-y-4">
           <li>
+            <NavLink to="home" className="flex items-center gap-3">
+              <FaSitemap />
+              Home
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="cart" className="flex items-center gap-3">
               <CiShoppingCart />
               Cart
