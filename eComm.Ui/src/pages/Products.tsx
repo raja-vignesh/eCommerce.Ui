@@ -7,13 +7,17 @@ const PRODUCTS_TOAST_ID = "products-fetching";
 const PAGE_SIZE = 10;
 import { useState } from "react";
 import type { ProductResponse } from "../sharedTypes/types/products/ProductsResponse.type";
-import { EditProductModal } from "../ui/products/EditProductModal";
-
+import { ProductFormModal } from "../ui/products/ProductFormModal";
 const Products = () => {
   // Inside ManageProducts:
   const [editingProduct, setEditingProduct] = useState<ProductResponse | null>(
     null,
   );
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const closeModal = () => {
+    setIsCreateOpen(false);
+    setEditingProduct(null);
+  };
   const { data, isPending, isError, isFetching, error } = useProducts(
     1,
     PAGE_SIZE,
@@ -45,7 +49,14 @@ const Products = () => {
   return (
     <div className="p-6">
       <h1 className="mb-6 text-2xl font-bold">Manage Products</h1>
-
+      <button
+        type="button"
+        onClick={() => setIsCreateOpen(true)}
+        className="flex cursor-pointer items-center gap-2 rounded-md bg-indigo-800 px-4 py-2 font-semibold text-white hover:bg-indigo-900"
+      >
+        <span>+</span>
+        Add Product
+      </button>
       <ProductsTable
         products={data?.items ?? []}
         onEdit={(product) => {
@@ -57,9 +68,12 @@ const Products = () => {
           handleDelete(product.productId);
         }}
       />
-      <EditProductModal
+
+      <ProductFormModal
+        key={editingProduct?.productId ?? "create"}
+        isOpen={isCreateOpen || editingProduct !== null}
         product={editingProduct}
-        onClose={() => setEditingProduct(null)}
+        onClose={closeModal}
       />
     </div>
   );

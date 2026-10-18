@@ -99,3 +99,24 @@ export const updateProductRequest = async (
   }
   return parsed.data;
 };
+
+export const createProductRequest = async (
+  product: ProductFormValues,
+  signal?: AbortSignal,
+) => {
+  const response = await apiClient.post(
+    `${apiBaseUrl}/api/products`,
+    product,
+    signal,
+  );
+  if (!response) {
+    throw new Error("Product Creation Failed");
+  }
+  const parsed = await ProductResponseSchema.safeParseAsync(response);
+  if (!parsed.success) {
+    console.error("products parsing failed", parsed.error.issues);
+    console.error("zod error", parsed.error.message);
+    throw new Error(parsed.error.message);
+  }
+  return parsed.data;
+};
